@@ -42,6 +42,9 @@ class Post(models.Model):
     postAuthor = models.ForeignKey(Author, on_delete=models.CASCADE)
     postCategory = models.ManyToManyField(Category, through='PostCategory')
 
+    def __str__(self):
+        return f'{self.pk}: {self.title.title()}'
+
     def like(self):
         self.rating += 1
         self.save()

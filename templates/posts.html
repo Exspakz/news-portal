@@ -1,0 +1,39 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+News
+{% endblock title %}
+
+{% block head %}
+News
+{% endblock head %}
+
+{% block content %}
+    <h1>All news</h1>
+        {% if posts %}
+            <h3>
+            The number of news:
+            {{ posts|length }}
+            </h3>
+            <hr>
+            <table>
+                <tr>
+                    <td>Title</td>
+                    <td>Date</td>
+                    <td>Preview</td>
+                </tr>
+
+                {% for post in posts|dictsortreversed:'dateCreation' %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.dateCreation|date:'d.M.Y' }}</td>
+                    <td>{{ post.text|truncatewords:20|censor }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h2>No news!</h2>
+        {% endif %}
+{% endblock content %}
