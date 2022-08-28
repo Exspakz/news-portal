@@ -1,0 +1,45 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Search
+{% endblock title %}
+
+{% block head %}
+Search
+{% endblock head %}
+
+{% block content %}
+    <h1>Search a news</h1>
+
+    <form action=""  method="get">
+        {{ filterset.form.as_p }}
+        <input type="submit" value="Search">
+    </form>
+
+    <hr>
+    {% if post_search %}
+        <h3>
+            The number of news:
+            {{ post_search|length }}
+        </h3>
+        <hr>
+        <table>
+            <tr>
+                <td>Title</td>
+                <td>Date</td>
+                <td>Preview</td>
+            </tr>
+
+            {% for post in post_search|dictsortreversed:'dateCreation' %}
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>{{ post.dateCreation|date:'d.M.Y' }}</td>
+                <td>{{ post.text|truncatewords:20 }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h2>No news!</h2>
+    {% endif %}
+
+{% endblock content %}

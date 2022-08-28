@@ -3,11 +3,11 @@
 {% load custom_filters %}
 
 {% block title %}
-News
+All news
 {% endblock title %}
 
 {% block head %}
-News
+All news
 {% endblock head %}
 
 {% block content %}
@@ -29,11 +29,37 @@ News
                 <tr>
                     <td>{{ post.title }}</td>
                     <td>{{ post.dateCreation|date:'d.M.Y' }}</td>
-                    <td>{{ post.text|truncatewords:20|censor }}</td>
+                    <td>{{ post.text|truncatewords:20 }}</td>
                 </tr>
                 {% endfor %}
             </table>
         {% else %}
             <h2>No news!</h2>
         {% endif %}
+
+    {% if page_obj.has_previous %}
+        <a href="?page=1">1</a>
+        {% if page_obj.previous_page_number != 1 %}
+            ...
+            <a href ="?page={{ page_obj.previous_page_number }}">
+                {{ page_obj.previous_page_number }}
+            </a>
+        {% endif %}
+    {% endif %}
+
+    {{ page_obj.number }}
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">
+            {{ page_obj.next_page_number }}
+        </a>
+        {% if page_obj.next_page_number != paginator.num_pages %}
+            ...
+            <a href="?page={{ paginator.num_pages }}">
+                {{ paginator.num_pages }}
+            </a>
+        {% endif %}
+    {% endif %}
+
+
 {% endblock content %}

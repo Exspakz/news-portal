@@ -5,11 +5,12 @@ register = template.Library()
 
 @register.filter()
 def censor(text):
+    bad_words = ('fuck', 'bitch')
 
     if not isinstance(text, str):
         raise TypeError(f"unresolved type '{type(text)}' expected  type 'str'")
 
     for word in text.split():
-        if word[0] == word[0].upper():
+        if word.lower() in bad_words:
             text = text.replace(word, f"{word[0]}{'*' * (len(word) - 1)}")
     return text
