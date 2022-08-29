@@ -1,9 +1,12 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
-from .models import Author, Category, Post, PostCategory
+from .models import Author, Category, Post
 
 
 class PostForm(forms.ModelForm):
+    text = forms.CharField(min_length=500)
+
     postAuthor = forms.ModelChoiceField(
         label='Author',
         empty_label='Select a author',
@@ -23,6 +26,14 @@ class PostForm(forms.ModelForm):
             'title',
             'text',
             'postAuthor',
-            'postCategory',
             'categoryType',
+            'postCategory',
         ]
+
+    def clean(self):
+        cleaned_data = super().clean()
+        title = cleaned_data.get('title')
+        if title[0].islower():
+            raise ValidationError(
+                'The title should start with uppercase letter'
+            )
