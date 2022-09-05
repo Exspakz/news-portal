@@ -34,6 +34,8 @@ class PostForm(forms.ModelForm):
         cleaned_data = super().clean()
         title = cleaned_data.get('title')
         if title[0].islower():
-            raise ValidationError(
-                'The title should start with uppercase letter'
-            )
+            raise ValidationError({
+                'title': 'The title should start with uppercase letter'
+            })
+
+        return cleaned_data
