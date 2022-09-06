@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            {% block head_title %}
+            {% endblock head_title %}
+        </title>
+    </head>
+    <h3>Menu:</h3>
+    <div>
+        <ul>
+            <li><a title="Home" href="{% url 'home' %}">Home</a></li>
+        </ul>
+    </div>
+    <body>
+        {% block body %}
+            {% block content %}
+            {% endblock content %}
+        {% endblock body %}
+        {% block extra_body %}
+        {% endblock extra_body %}
+    </body>
+</html>

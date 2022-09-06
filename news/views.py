@@ -1,9 +1,10 @@
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import (
-    ListView, DetailView, CreateView, UpdateView, DeleteView
+    TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView,
 )
 
-from .models import Post
+from .models import Author, Post
 from .forms import PostForm
 from .filters import PostFilter
 
@@ -11,20 +12,20 @@ from .filters import PostFilter
 class PostList(ListView):
     model = Post
     ordering = 'dateCreation'
-    template_name = 'posts.html'
+    template_name = 'news/posts.html'
     context_object_name = 'posts'
     paginate_by = 5
 
 
 class PostDetail(DetailView):
     model = Post
-    template_name = 'post.html'
+    template_name = 'news/post.html'
     context_object_name = 'post'
 
 
 class PostSearch(ListView):
     model = Post
-    template_name = 'post_search.html'
+    template_name = 'news/post_search.html'
     context_object_name = 'post_search'
 
     def get_queryset(self):
@@ -38,19 +39,32 @@ class PostSearch(ListView):
         return context
 
 
-class PostCreate(CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
+    model = Post
     form_class = PostForm
+    template_name = 'news/post_create.html'
+    permission_required = ('news.add_post', )
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.postAuthor = Author.objects.get(authorUser=self.request.user)
+        return super().form_valid(form)
+
+
+class PostUpdate(PermissionRequiredMixin, UpdateView):
     model = Post
-    template_name = 'post_create.html'
-
-
-class PostUpdate(UpdateView):
     form_class = PostForm
-    model = Post
-    template_name = 'post_update.html'
+    template_name = 'news/post_update.html'
+    permission_required = ('news.change_post', )
 
 
-class PostDelete(DeleteView):
+class PostDelete(PermissionRequiredMixin, DeleteView):
     model = Post
-    template_name = 'post_delete.html'
+    template_name = 'news/post_delete.html'
     success_url = reverse_lazy('post_list')
+    permission_required = ('news.delete_post', )
+
+
+class PostAuthor(PermissionRequiredMixin, TemplateView):
+    template_name = 'news/post_author.html'
+    permission_required = ('news.change_post', )

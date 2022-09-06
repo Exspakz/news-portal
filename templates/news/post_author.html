@@ -1,0 +1,35 @@
+{% extends 'default.html' %}
+
+{% block title %}
+My news
+{% endblock title %}
+
+{% block content %}
+    <h1>My news</h1>
+        {% if request.user.author.post_set.all %}
+            <h3>
+            The number of news:
+            {{ request.user.author.post_set.all|length }}
+                <br>
+            Click on the <strong>Title</strong> for editing
+            </h3>
+            <hr>
+            <table>
+                <tr>
+                    <td><h4><strong>Title</strong></h4></td>
+                    <td><h4><strong>Date</strong></h4></td>
+                    <td><h4><strong>Preview</strong></h4></td>
+                </tr>
+
+                {% for post in request.user.author.post_set.all %}
+                <tr>
+                    <td><a class="nav-link" href="{% url 'post_update' post.id %}"> {{ post.title }} </a></td>
+                    <td>{{ post.dateCreation|date:'d.M.Y' }}</td>
+                    <td>{{ post.text|truncatewords:20 }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <h2>No news!</h2>
+        {% endif %}
+{% endblock content %}

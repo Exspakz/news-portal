@@ -1,17 +1,11 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Author, Category, Post
+from .models import Category, Post
 
 
 class PostForm(forms.ModelForm):
-    text = forms.CharField(min_length=500)
-
-    postAuthor = forms.ModelChoiceField(
-        label='Author',
-        empty_label='Select a author',
-        queryset=Author.objects.all(),
-    )
+    text = forms.CharField(min_length=500, widget=forms.Textarea)
 
     postCategory = forms.ModelMultipleChoiceField(
         label='Category',
@@ -25,7 +19,6 @@ class PostForm(forms.ModelForm):
         fields = [
             'title',
             'text',
-            'postAuthor',
             'categoryType',
             'postCategory',
         ]

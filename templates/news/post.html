@@ -1,14 +1,10 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'default.html' %}
 
 {% load custom_filters %}
 
 {% block title %}
 {{ post.title }}
 {% endblock title %}
-
-{% block head %}
-{{ post.title }}
-{% endblock head %}
 
 {% block content %}
     <h1>{{ post.title }}</h1>
