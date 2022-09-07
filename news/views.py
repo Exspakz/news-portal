@@ -7,6 +7,7 @@ from django.views.generic import (
 from .models import Author, Post
 from .forms import PostForm
 from .filters import PostFilter
+from .mixins import OwnerPermissionRequiredMixin
 
 
 class PostList(ListView):
@@ -39,7 +40,7 @@ class PostSearch(ListView):
         return context
 
 
-class PostCreate(PermissionRequiredMixin, CreateView):
+class PostCreate(OwnerPermissionRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'news/post_create.html'
@@ -51,10 +52,11 @@ class PostCreate(PermissionRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PostUpdate(PermissionRequiredMixin, UpdateView):
+class PostUpdate(OwnerPermissionRequiredMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'news/post_update.html'
+    success_url = reverse_lazy('post_detail')
     permission_required = ('news.change_post', )
 
 
