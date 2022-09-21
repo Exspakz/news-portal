@@ -1,8 +1,8 @@
 import django_filters
 
 from django.forms import DateInput
-from django_filters import FilterSet, ChoiceFilter, ModelChoiceFilter
-from .models import Post, Category
+from django_filters import FilterSet
+from .models import Author, Post, Category
 
 
 class PostFilter(FilterSet):
@@ -22,20 +22,33 @@ class PostFilter(FilterSet):
         ),
     )
 
-    category = ModelChoiceFilter(
+    author = django_filters.ModelChoiceFilter(
+        field_name='postAuthor',
+        queryset=Author.objects.all(),
+        label='Author',
+        empty_label='Select a author',
+    )
+
+    category = django_filters.ModelChoiceFilter(
         field_name='postCategory',
         queryset=Category.objects.all(),
         label='Category',
         empty_label='Select a category',
     )
 
-    type = ChoiceFilter(
+    type = django_filters.ChoiceFilter(
         field_name='categoryType',
         label='Type',
         empty_label='Select a type',
         choices=Post.CATEGORIES,
     )
 
-    class Meta:
-        model = Post
-        fields = ['title', 'dateCreation']
+    # class Meta:
+    #     model = Post
+    #     fields = [
+    #         'title',
+    #         'dateCreation',
+    #         'categoryType',
+    #         'postAuthor',
+    #         'postCategory',
+    #     ]

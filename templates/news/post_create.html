@@ -5,11 +5,18 @@ Create
 {% endblock title %}
 
 {% block content %}
+    <br>
     <h1>Create a news</h1>
-
-    <form action=""  method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
-    </form>
+    {% if posts_limit %}
+        <hr>
+        <h3>You have reached the limit and can no longer publish news today</h3>
+        <hr>
+    {% else %}
+        <h3>Today you have created {{ count }} news, limit {{ limit }}</h3>
+        <form action=""  method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save">
+        </form>
+    {% endif %}
 {% endblock content %}

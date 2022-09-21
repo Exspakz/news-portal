@@ -5,11 +5,12 @@ My news
 {% endblock title %}
 
 {% block content %}
+    <br>
     <h1>My news</h1>
-        {% if request.user.author.post_set.all %}
+        {% if author_posts %}
             <h3>
             The number of news:
-            {{ request.user.author.post_set.all|length }}
+            {{ author_posts|length }}
                 <br>
             Click on the <strong>Title</strong> for editing
             </h3>
@@ -21,7 +22,7 @@ My news
                     <td><h4><strong>Preview</strong></h4></td>
                 </tr>
 
-                {% for post in request.user.author.post_set.all %}
+                {% for post in author_posts|dictsortreversed:'dateCreation' %}
                 <tr>
                     <td><a class="nav-link" href="{% url 'post_update' post.id %}"> {{ post.title }} </a></td>
                     <td>{{ post.dateCreation|date:'d.M.Y' }}</td>

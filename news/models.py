@@ -34,9 +34,18 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
+    subscribers = models.ManyToManyField(User, through='SubscribeCategory')
 
     def __str__(self):
         return f'{self.name}'
+
+
+class SubscribeCategory(models.Model):
+    categoryThrough = models.ForeignKey(Category, on_delete=models.CASCADE)
+    userThrough = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.userThrough.username} / {self.categoryThrough.name}'
 
 
 class Post(models.Model):

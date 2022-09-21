@@ -5,7 +5,8 @@ from .models import Category, Post
 
 
 class PostForm(forms.ModelForm):
-    text = forms.CharField(min_length=500, widget=forms.Textarea)
+    title = forms.CharField(max_length=128)
+    text = forms.CharField(min_length=300, widget=forms.Textarea)
 
     postCategory = forms.ModelMultipleChoiceField(
         label='Category',

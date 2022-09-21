@@ -6,14 +6,15 @@ News Portal
 
 {% block content %}
     <br>
-    <hr size="3">
+    <h1><span style="color: #0000ff;">{{ time_now|date:'d M Y' }}</span></h1>
+    <hr size="2">
     <h1>Welcome To The<br>News Portal</h1>
-    <hr size="3">
+    <hr size="2">
     {% if not is_author %}
     <button><a class="nav-link" href="{% url 'account_upgrade' %}">
         <h4><strong>Join the authors!</strong></h4>
     </a></button>
-    <hr size="2">
+    <hr size="1">
     {% endif %}
     <div>
         <ul class="navbar-nav ml-auto">
@@ -27,7 +28,7 @@ News Portal
                 <h3><a class="nav-link" href="{% url 'post_create' %}"> Create News </a></h3>
             </li>
             <li class="nav-item">
-                <h3><a class="nav-link" href="{% url 'post_author' %}"> Update News </a></h3>
+                <h3><a class="nav-link" href="{% url 'author_posts' %}"> Update News </a></h3>
             </li>
         </ul>
     </div>

@@ -7,13 +7,34 @@
 {% endblock title %}
 
 {% block content %}
+    <br>
     <h1>{{ post.title }}</h1>
-    <h3>
-        {% for category in post.postCategory.all %}
-            {{ category.name }}
-        {% endfor %}
-    </h3>
     <h3>{{ post.dateCreation|date:'d.M.Y' }}</h3>
+    <h4>Author: {{ post.postAuthor.authorUser.first_name }} {{ post.postAuthor.authorUser.last_name }}</h4>
+    <h4>Rating: {{ post.rating }}</h4>
+    <h4 style="display:inline;">Category:</h4>
+        {% if request.user.is_authenticated %}
+            {% for category in post.postCategory.all %}
+                <h4 style="display:inline;">{{ category.name }}</h4>
+                {% if not is_subscriber %}
+                    <hr>
+                    <button><a class="nav-link" href="{% url 'account_add_sub' category.pk %}">
+                        <h4><strong>Subscribe!</strong></h4>
+                    </a></button>
+                {% else%}
+                    <hr>
+                    <button><a class="nav-link" href="{% url 'account_remove_sub' category.pk %}">
+                        <h4><strong>Unsubscribe!</strong></h4>
+                    </a></button>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            {% for category in post.postCategory.all %}
+                <h4 style="display:inline;">{{ category.name }}</h4>
+            {% endfor %}
+            <hr>
+            <a class="nav-link" href="{% url 'account_login' %}"><h4>Sign In to subscribe</h4></a>
+        {% endif %}
     <hr>
     <h3>{{ post.text }}</h3>
 {% endblock content %}

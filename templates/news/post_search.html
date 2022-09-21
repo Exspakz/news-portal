@@ -5,6 +5,7 @@ Search
 {% endblock title %}
 
 {% block content %}
+    <br>
     <h1>Search a news</h1>
 
     <form action=""  method="get">
@@ -28,7 +29,7 @@ Search
 
             {% for post in post_search|dictsortreversed:'dateCreation' %}
             <tr>
-                <td>{{ post.title }}</td>
+                <td><a class="nav-link" href="{% url 'post_detail' post.id %}">{{ post.title }}</a></td>
                 <td>{{ post.dateCreation|date:'d.M.Y' }}</td>
                 <td>{{ post.text|truncatewords:20 }}</td>
             </tr>

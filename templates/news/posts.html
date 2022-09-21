@@ -7,6 +7,7 @@ All news
 {% endblock title %}
 
 {% block content %}
+    <br>
     <h1>All news</h1>
         {% if posts %}
             <h3>
@@ -23,7 +24,7 @@ All news
 
                 {% for post in posts|dictsortreversed:'dateCreation' %}
                 <tr>
-                    <td>{{ post.title }}</td>
+                    <td><a class="nav-link" href="{% url 'post_detail' post.id %}">{{ post.title }}</a></td>
                     <td>{{ post.dateCreation|date:'d.M.Y' }}</td>
                     <td>{{ post.text|truncatewords:20 }}</td>
                 </tr>

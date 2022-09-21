@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>All news in the last week in category "{{ category }}" </h2>
+    <p>
+        Hello, {{ name }}!<br>
+        All news in the last week in your favorite category!<br>
+        {% for id, title in posts %}
+            <a href="http://{{ site.domain }}:8000/news/{{ id }}">{{ title }}</a><br>
+        {% endfor %}
+    </p>
+</body>
+</html>

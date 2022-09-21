@@ -1,10 +1,14 @@
+from django.conf import settings
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.models import AnonymousUser
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import (
     TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView,
 )
 
-from .models import Author, Post
+from datetime import datetime, timedelta
+
+from .models import Author, Post, Category, SubscribeCategory  # Category, PostCategory
 from .forms import PostForm
 from .filters import PostFilter
 from .mixins import OwnerPermissionRequiredMixin
@@ -23,6 +27,13 @@ class PostDetail(DetailView):
     template_name = 'news/post.html'
     context_object_name = 'post'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        for category in self.get_object().postCategory.all():
+            if not isinstance(self.request.user, AnonymousUser):
+                context['is_subscriber'] = self.request.user.category_set.filter(pk=category.pk).exists()
+        return context
+
 
 class PostSearch(ListView):
     model = Post
@@ -40,7 +51,7 @@ class PostSearch(ListView):
         return context
 
 
-class PostCreate(OwnerPermissionRequiredMixin, CreateView):
+class PostCreate(PermissionRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'news/post_create.html'
@@ -51,12 +62,25 @@ class PostCreate(OwnerPermissionRequiredMixin, CreateView):
         self.object.postAuthor = Author.objects.get(authorUser=self.request.user)
         return super().form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+
+        limit = settings.DAILY_POST_LIMIT
+        prev_day = datetime.utcnow() - timedelta(days=1)
+        posts_day_count = Post.objects.filter(
+            postAuthor__authorUser=self.request.user,
+            dateCreation__gte=prev_day,
+        ).count()
+        context['count'] = posts_day_count
+        context['limit'] = limit
+        context['posts_limit'] = limit <= posts_day_count
+        return context
+
 
 class PostUpdate(OwnerPermissionRequiredMixin, UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'news/post_update.html'
-    success_url = reverse_lazy('post_detail')
     permission_required = ('news.change_post', )
 
 
@@ -68,5 +92,10 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
 
 
 class PostAuthor(PermissionRequiredMixin, TemplateView):
-    template_name = 'news/post_author.html'
+    template_name = 'news/author_posts.html'
     permission_required = ('news.change_post', )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['author_posts'] = self.request.user.author.post_set.all
+        return context

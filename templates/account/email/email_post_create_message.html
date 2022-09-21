@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>New post "{{ title }}" </h2>
+    <p>
+        Hello, {{ name }}! New post "{{ title }}" in your favorite category!<br>
+        {{ text|truncatechars:100 }} <a href="{{ link }}">link to the post</a>
+    </p>
+</body>
+</html>
