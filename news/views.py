@@ -8,7 +8,7 @@ from django.views.generic import (
 
 from datetime import datetime, timedelta
 
-from .models import Author, Post, Category, SubscribeCategory  # Category, PostCategory
+from .models import Author, Post
 from .forms import PostForm
 from .filters import PostFilter
 from .mixins import OwnerPermissionRequiredMixin
