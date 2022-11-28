@@ -22,7 +22,7 @@ class UserProfileUpdate(ProfileRequiredMixin, UpdateView):
 def upgrade_user(request):
     user = request.user
     group = Group.objects.get(name='authors')
-    if not request.user.groups.filter(name='authors').exists():
+    if not user.groups.filter(name='authors').exists():
         group.user_set.add(user)
         if not hasattr(user, 'author'):
             Author.objects.create(
@@ -34,7 +34,7 @@ def upgrade_user(request):
 @login_required
 def add_subscribe(request, **kwargs):
     category = Category.objects.get(pk=int(kwargs['pk']))
-    category.subscribers.add(request.user)
+    category.subscribers.add(request.user, through_defaults=None)
     return redirect(request.META.get('HTTP_REFERER'))
 
 

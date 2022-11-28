@@ -27,6 +27,8 @@ def notify_subscribers_for_new_post(id, title, text):
         )
     )
 
+    print(mailing_list)
+
     for user, first_name, email, category in mailing_list:
         if not first_name:
             first_name = user

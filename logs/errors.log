@@ -1,0 +1,59 @@
+2022-11-28 18:25:26,721 | ERROR | Internal Server Error: /news/author/ | /home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/utils/log.py | (<class 'django.urls.exceptions.NoReverseMatch'>, NoReverseMatch("Reverse for 'post_update' not found. 'post_update' is not a valid view function or pattern name."), <traceback object at 0x7fac4415cf00>)
+Traceback (most recent call last):
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/core/handlers/base.py", line 220, in _get_response
+    response = response.render()
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/response.py", line 114, in render
+    self.content = self.rendered_content
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/response.py", line 92, in rendered_content
+    return template.render(context, self._request)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/backends/django.py", line 62, in render
+    return self.template.render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 175, in render
+    return self._render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 322, in render
+    return nodelist.render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/base.py", line 966, in render_annotated
+    return self.render(context)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/template/defaulttags.py", line 472, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/urls/base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "/home/exspa/IT/PyCharm/SF/news-portal/venv/lib/python3.10/site-packages/django/urls/resolvers.py", line 803, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'post_update' not found. 'post_update' is not a valid view function or pattern name.

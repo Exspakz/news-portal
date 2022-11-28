@@ -1,7 +1,7 @@
+from django.core.cache import cache
 from django.db import models
-from django.contrib.auth.models import User
 from django.db.models import Sum
-from django.urls import reverse
+from django.contrib.auth.models import User
 
 
 class Author(models.Model):
@@ -66,7 +66,11 @@ class Post(models.Model):
     postCategory = models.ManyToManyField(Category, through='PostCategory')
 
     def __str__(self):
-        return f'{self.pk}: {self.title.title()}'
+        return f'{self.title.title()}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'post-{self.id}')
 
     def like(self):
         self.rating += 1
@@ -78,9 +82,6 @@ class Post(models.Model):
 
     def preview(self):
         return f'{self.text[:124]}...'
-
-    def get_absolute_url(self):
-        return reverse('post_detail', kwargs={'pk': self.pk})
 
 
 class PostCategory(models.Model):

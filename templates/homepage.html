@@ -1,9 +1,12 @@
 {% extends 'default.html' %}
 
+{% load cache %}
+
 {% block title %}
 News Portal
 {% endblock title %}
 
+{% cache 60 * 5 content %}
 {% block content %}
     <br>
     <h1><span style="color: #0000ff;">{{ time_now|date:'d M Y' }}</span></h1>
@@ -33,3 +36,4 @@ News Portal
         </ul>
     </div>
 {% endblock content %}
+{% endcache %}

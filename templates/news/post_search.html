@@ -1,5 +1,7 @@
 {% extends 'default.html' %}
 
+{% load custom_tags %}
+
 {% block title %}
 Search
 {% endblock title %}
@@ -27,7 +29,7 @@ Search
                 <td><h4><strong>Preview</strong></h4></td>
             </tr>
 
-            {% for post in post_search|dictsortreversed:'dateCreation' %}
+            {% for post in post_search %}
             <tr>
                 <td><a class="nav-link" href="{% url 'post_detail' post.id %}">{{ post.title }}</a></td>
                 <td>{{ post.dateCreation|date:'d.M.Y' }}</td>
@@ -37,6 +39,32 @@ Search
         </table>
     {% else %}
         <h2>No news!</h2>
+    {% endif %}
+
+    {% if paginator.num_pages > 1 %}
+        {% if page_obj.has_previous %}
+            <a href="?{% url_replace page=1 %}">1</a>
+            {% if page_obj.previous_page_number != 1 %}
+                ...
+                <a href ="?{% url_replace page=page_obj.previous_page_number %}">
+                    {{ page_obj.previous_page_number }}
+                </a>
+            {% endif %}
+        {% endif %}
+
+        {{ page_obj.number }}
+
+        {% if page_obj.has_next %}
+            <a href="?{% url_replace page=page_obj.next_page_number %}">
+                {{ page_obj.next_page_number }}
+            </a>
+            {% if page_obj.next_page_number != paginator.num_pages %}
+                ...
+                <a href="?{% url_replace page=paginator.num_pages %}">
+                    {{ paginator.num_pages }}
+                </a>
+            {% endif %}
+        {% endif %}
     {% endif %}
 
 {% endblock content %}

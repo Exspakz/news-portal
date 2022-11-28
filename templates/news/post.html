@@ -8,7 +8,7 @@
 
 {% block content %}
     <br>
-    <h1>{{ post.title }}</h1>
+    <h1>{{ post.title|censor }}</h1>
     <h3>{{ post.dateCreation|date:'d.M.Y' }}</h3>
     <h4>Author: {{ post.postAuthor.authorUser.first_name }} {{ post.postAuthor.authorUser.last_name }}</h4>
     <h4>Rating: {{ post.rating }}</h4>
@@ -36,5 +36,5 @@
             <a class="nav-link" href="{% url 'account_login' %}"><h4>Sign In to subscribe</h4></a>
         {% endif %}
     <hr>
-    <h3>{{ post.text }}</h3>
+    <h3>{{ post.text|censor }}</h3>
 {% endblock content %}

@@ -5,7 +5,7 @@ register = template.Library()
 
 @register.filter()
 def censor(text):
-    bad_words = ('badword',)
+    bad_words = ('badword', )
 
     if not isinstance(text, str):
         raise TypeError(f"unresolved type '{type(text)}' expected  type 'str'")

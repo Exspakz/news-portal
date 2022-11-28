@@ -2,6 +2,7 @@ import django_filters
 
 from django.forms import DateInput
 from django_filters import FilterSet
+
 from .models import Author, Post, Category
 
 
@@ -12,12 +13,11 @@ class PostFilter(FilterSet):
         label='Title',
     )
 
-    dateCreation = django_filters.DateTimeFilter(
+    dateCreation = django_filters.DateFilter(
         field_name='dateCreation',
         lookup_expr='gt',
         label='Date',
         widget=DateInput(
-            format='%Y-%m-%d',
             attrs={'type': 'date'},
         ),
     )

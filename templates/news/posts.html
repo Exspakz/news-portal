@@ -20,13 +20,19 @@ All news
                     <td><h4><strong>Title</strong></h4></td>
                     <td><h4><strong>Date</strong></h4></td>
                     <td><h4><strong>Preview</strong></h4></td>
+                    <td><h4><strong>Category</strong></h4></td>
                 </tr>
 
-                {% for post in posts|dictsortreversed:'dateCreation' %}
+                {% for post in posts %}
                 <tr>
                     <td><a class="nav-link" href="{% url 'post_detail' post.id %}">{{ post.title }}</a></td>
                     <td>{{ post.dateCreation|date:'d.M.Y' }}</td>
                     <td>{{ post.text|truncatewords:20 }}</td>
+                    <td>
+                        {% for cat in post.postCategory.all %}
+                            <a class="nav-link" href="{% url 'category_list' cat.id %}">{{ cat.name }}</a>
+                        {% endfor %}
+                    </td>
                 </tr>
                 {% endfor %}
             </table>
@@ -57,6 +63,5 @@ All news
             </a>
         {% endif %}
     {% endif %}
-
 
 {% endblock content %}
